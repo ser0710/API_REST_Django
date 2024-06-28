@@ -1,0 +1,63 @@
+init project:
+    django-admin startproject (name)
+create an app:
+    python manage.py startapp (name)
+start server:
+    python manage.py runserver
+entrar a settings y agregar watchlist_app en el archivo en INSTALLED_APPS
+
+python manage.py migrate
+
+crear super user:
+    python manage.py createsuperuser (user ser0710 - password password)
+
+model -> SQL..? (cada q se cambia el modelo o se agrega)
+    python manage.py makemigrations
+
+por si acaso:
+    https://github.com/ShubhamSarda/IMDB-Clone-DRF
+
+
+auth:
+    REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+en settings.py (para todas las clases)
+
+[
+    si se quiere usar JWT:
+    pip install djangorestframework_simplejwt
+    agregar al archivo de settings.py
+
+    REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+            'rest_framework_simplejwt.authentication.JWTAuthentication',
+        ]
+    }
+
+    En el archivo de URLS agregar al urlpatterns:
+
+    path('api/token/', TokenObtainPairView*.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView*.as_view(), name='token_refresh')
+
+    * importar desde rest_framework_simplejwt.views
+
+    para crear un token se debe:
+    1 api/token/ acceder a este path (se crean 2 token uno con duracion 5 mins (access) y otro 24 hr (refresh))
+    2 una vez pasen los 5 min acceder a esta path api/token/refresh/ en body seleccionar x-www-form-urlencoded refresh - *token*
+    (no en header) da un nuevo access token
+
+    para acceder a los otros paths en el header value = Bearer *token*
+
+    
+]
+
+pip install django-filter
+
+solo se puede aplicar en generic views (generics....)
+
+correr todos los test
+python manage.py test
